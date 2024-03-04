@@ -1,6 +1,7 @@
 name: Sign Component
-on: push:
-    workflow_dispatch:
+on: 
+  push:
+  workflow_dispatch:
     
 env:
   keychain_password: 1234
