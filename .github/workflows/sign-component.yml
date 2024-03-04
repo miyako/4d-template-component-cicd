@@ -54,3 +54,7 @@ jobs:
       with:
         build_dir: build
         build_project_path: example/Project/example.4DProject
+
+    - name: delete keychain
+      run: |
+        security delete-keychain "${KEYCHAIN_PATH}"
