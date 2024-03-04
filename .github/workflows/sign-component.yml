@@ -14,6 +14,23 @@ jobs:
   sign:
     runs-on: macos-latest
     steps:
+
+    - name: checkout 
+      uses: actions/checkout@v4
+
+    - name: get tool4d
+      id: get
+      uses: miyako/4D/.github/actions/get-tool@v1
+      with:
+        platform: macos
+        branch: 20.x
+        version: 20.2
+        build: latest
+        arch: x86
+     
+    - name: build component
+      id: build
+      uses: miyako/4D/.github/actions/build-component@v1
     
     - name: install credentials
       run: |
