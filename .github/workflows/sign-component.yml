@@ -18,7 +18,8 @@ jobs:
         echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
         echo "LOG_PATH=${LOG_PATH}" >> $GITHUB_ENV
         
-        KEYCHAIN_PATH=${RUNNER_TEMP}/temp.keychain-db
+        # KEYCHAIN_PATH=${RUNNER_TEMP}/temp.keychain-db
+        KEYCHAIN_PATH=./temp.keychain-db
         echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
         
         echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
@@ -64,6 +65,6 @@ jobs:
         LogPath: ${{ env.LOG_PATH }}   
         keychain: ${{ env.KEYCHAIN_PATH }}
 
-    - name: delete keychain
-      run: |
-        security delete-keychain "${KEYCHAIN_PATH}"
+    # - name: delete keychain
+    #  run: |
+    #    security delete-keychain "${KEYCHAIN_PATH}"
