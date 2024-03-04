@@ -6,7 +6,7 @@ From Xcode, [export signing certificate](https://help.apple.com/xcode/mac/curren
 
 <img src="https://github.com/miyako/4d-template-component-cicd/assets/1725068/f5a70c38-ace0-424b-a62a-40c058ea1667" width="auto" height="300px" />
 
-Copy saved file content as base64 and the password as [GitHub Actions secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions). If the reposotory is owned by an organisation, save them as [organisation secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-an-organization).
+Copy saved file content as base64 and the password as [GitHub Actions secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
 
 * `APPLE_DEVELOPER_ID_CERTIFICATE`
 * `APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD`
