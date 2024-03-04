@@ -6,7 +6,7 @@ on:
 jobs:
 
   sign:
-    runs-on: macos-latest
+    runs-on: [macos, self-hosted]
     steps:
     
     - name: install credentials
