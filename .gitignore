@@ -4,3 +4,4 @@ example/userPreferences.*
 example/Settings/buildApp.4DSettings
 example/Libraries/lib4d-arm64.dylib
 example_Build/*
+actions-runner/*
