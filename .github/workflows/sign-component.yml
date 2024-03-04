@@ -25,7 +25,6 @@ jobs:
         echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o ${ENTITLEMENTS_PATH}
         
         security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
-        security set-keychain-settings -lut 21600 ${KEYCHAIN_PATH}
         security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
         security import ${CERTIFICATE_PATH} -P "${APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD}" -t cert -k "${KEYCHAIN_PATH}"
         security list-keychain -d user -s ${KEYCHAIN_PATH}
@@ -58,3 +57,13 @@ jobs:
     - name: delete keychain
       run: |
         security delete-keychain "${KEYCHAIN_PATH}"
+        
+    - name: sign
+      id: sign
+      uses: miyako/4D/.github/actions/sign-app@v1
+      with:
+        Entitlements: ${{ env.ENTITLEMENTS_PATH }} 
+        nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
+        PathApp: build/Components/example.4dbase       
+        LogPath: ${{ env.LOG_PATH }}   
+        keychain: ${{ env.KEYCHAIN_PATH }}
