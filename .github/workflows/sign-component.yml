@@ -12,8 +12,13 @@ jobs:
     - name: install credentials
       run: |
         CERTIFICATE_PATH=${RUNNER_TEMP}/cer.p12
+        ENTITLEMENTS_PATH=${RUNNER_TEMP}/4D.entitlements
+        echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
+        LOG_PATH=${RUNNER_TEMP}/SignApp.log
+        echo "LOG_PATH=${LOG_PATH}" >> $GITHUB_ENV
         KEYCHAIN_PATH=${RUNNER_TEMP}/temp.keychain-db
         echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o ${CERTIFICATE_PATH}
+        echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o ${ENTITLEMENTS_PATH}
         security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
         security set-keychain-settings -lut 21600 ${KEYCHAIN_PATH}
         security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
@@ -23,6 +28,7 @@ jobs:
         APPLE_DEVELOPER_ID_CERTIFICATE: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE }}
         APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
         KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        CODESIGN_ENTITLEMENTS: ${{ secrets.CODESIGN_ENTITLEMENTS }}
 
     - name: checkout 
       uses: actions/checkout@v4
@@ -50,3 +56,4 @@ jobs:
       with:
         nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
         PathApp: build/Components/example.4dbase       
+        Entitlements: ${{ env.ENTITLEMENTS_PATH }}    
