@@ -11,23 +11,24 @@ jobs:
     
     - name: install credentials
       run: |
-        CERTIFICATE_PATH=${RUNNER_TEMP}/Developer ID Application.p12
-        ENTITLEMENTS_PATH=${RUNNER_TEMP}/4D.entitlements
+        CERTIFICATE_PATH="${RUNNER_TEMP}/Developer ID Application.p12"
+        ENTITLEMENTS_PATH="${RUNNER_TEMP}/4D.entitlements"
         LOG_PATH=${RUNNER_TEMP}/SignApp.log
         echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_ENV        
         echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
         echo "LOG_PATH=${LOG_PATH}" >> $GITHUB_ENV
         
-        KEYCHAIN_PATH=${RUNNER_TEMP}/temp.keychain-db
+        # KEYCHAIN_PATH=${RUNNER_TEMP}/temp.keychain-db
+        KEYCHAIN_PATH=./temp.keychain-db
         echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
         
-        echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o ${CERTIFICATE_PATH}
-        echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o ${ENTITLEMENTS_PATH}
+        echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
+        echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o "${ENTITLEMENTS_PATH}"
         
         security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
         security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
-        security import ${CERTIFICATE_PATH} -P "${APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD}" -t cert -f pkcs12 -k "${KEYCHAIN_PATH}"
-        security list-keychain -d user -s ${KEYCHAIN_PATH}
+        security import "${CERTIFICATE_PATH}" -P "${APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD}" -t cert -f pkcs12 -k "${KEYCHAIN_PATH}"
+        security list-keychain -d user -s "${KEYCHAIN_PATH}"
       env:
         APPLE_DEVELOPER_ID_CERTIFICATE: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE }}
         APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
@@ -53,10 +54,6 @@ jobs:
       with:
         build_dir: build
         build_project_path: example/Project/example.4DProject
-
-    - name: delete keychain
-      run: |
-        security delete-keychain "${KEYCHAIN_PATH}"
         
     - name: sign
       id: sign
@@ -67,3 +64,7 @@ jobs:
         PathApp: build/Components/example.4dbase       
         LogPath: ${{ env.LOG_PATH }}   
         keychain: ${{ env.KEYCHAIN_PATH }}
+
+    # - name: delete keychain
+    #  run: |
+    #    security delete-keychain "${KEYCHAIN_PATH}"
