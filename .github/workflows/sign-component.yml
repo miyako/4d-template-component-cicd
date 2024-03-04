@@ -13,12 +13,17 @@ jobs:
       run: |
         CERTIFICATE_PATH=${RUNNER_TEMP}/cer.p12
         ENTITLEMENTS_PATH=${RUNNER_TEMP}/4D.entitlements
-        echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
         LOG_PATH=${RUNNER_TEMP}/SignApp.log
+        echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_ENV        
+        echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
         echo "LOG_PATH=${LOG_PATH}" >> $GITHUB_ENV
+        
         KEYCHAIN_PATH=${RUNNER_TEMP}/temp.keychain-db
+        echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
+        
         echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o ${CERTIFICATE_PATH}
         echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o ${ENTITLEMENTS_PATH}
+        
         security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
         security set-keychain-settings -lut 21600 ${KEYCHAIN_PATH}
         security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
@@ -43,35 +48,9 @@ jobs:
         build: latest
         arch: x86
 
-    - name: build
+    - name: build component
       id: build
       uses: miyako/4D/.github/actions/build-component@v1
       with:
         build_dir: build
-        build_project_path: example/Project/example.4DProject  
-
-    - name: sign
-      id: sign
-      uses: miyako/4D/.github/actions/sign-app@v1
-      with:
-        Entitlements: ${{ env.ENTITLEMENTS_PATH }} 
-        nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
-        PathApp: build/Components/example.4dbase       
-        LogPath: ${{ env.LOG_PATH }}     
-
-    - name: prepare for distribution
-      run: |
-        PRODUCT_PATH="${PRODUCT_PATH}"
-        DMG_PATH="${PRODUCT_PATH}.dmg"
-        rm -f "${DMG_PATH}"
-        hdiutil create -format UDBZ -plist -srcfolder "${PRODUCT_PATH}" "${DMG_PATH}"
-        xcrun notarytool submit --apple-id "${NOTARYTOOL_APPLE_ID}" --password="$NOTARYTOOL_PASSWORD" --team-id "${NOTARYTOOL_TEAM_ID}" "${DMG_PATH}" --wait
-        xcrun stapler staple "${DMG_PATH}"
-      shell: bash
-      env: 
-        PRODUCT_PATH: build/Components/example.4dbase
-        PRODUCT_NAME: example
-        NOTARYTOOL_APPLE_ID: ${{ secrets.NOTARYTOOL_APPLE_ID }}
-        NOTARYTOOL_PASSWORD: ${{ secrets.NOTARYTOOL_PASSWORD }}
-        NOTARYTOOL_TEAM_ID: ${{ secrets.NOTARYTOOL_TEAM_ID }}
-        
+        build_project_path: example/Project/example.4DProject
