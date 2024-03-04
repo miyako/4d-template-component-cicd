@@ -11,8 +11,8 @@ jobs:
     
     - name: install credentials
       run: |
-        CERTIFICATE_PATH=${RUNNER_TEMP}/Developer ID Application.p12
-        ENTITLEMENTS_PATH=${RUNNER_TEMP}/4D.entitlements
+        CERTIFICATE_PATH="${RUNNER_TEMP}/Developer ID Application.p12"
+        ENTITLEMENTS_PATH="${RUNNER_TEMP}/4D.entitlements"
         LOG_PATH=${RUNNER_TEMP}/SignApp.log
         echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_ENV        
         echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
