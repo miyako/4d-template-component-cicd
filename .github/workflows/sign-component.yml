@@ -6,8 +6,12 @@ on:
     - main
   workflow_dispatch:
     inputs:
-      APPLE_DEVELOPER_ID_CERTIFICATE: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE }}
-      APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
+      APPLE_DEVELOPER_ID_CERTIFICATE: 
+        type: string
+        default: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE }}
+      APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: 
+        type: string
+        default: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
       
 env:
   keychain_password: '1234'
