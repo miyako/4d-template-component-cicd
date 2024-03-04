@@ -1,0 +1,25 @@
+{
+	"_method_": {},
+	"cs.example": {
+		"Test": {
+			"new()": {
+				"Syntax": "**.new**()",
+				"Params": [],
+				"Summary": ""
+			}
+		}
+	},
+	"Test": {
+		"test()": {
+			"Syntax": "**.test**() : cs.example.Test",
+			"Params": [
+				[
+					"",
+					"cs.example.Test",
+					"<-"
+				]
+			],
+			"Summary": ""
+		}
+	}
+}
