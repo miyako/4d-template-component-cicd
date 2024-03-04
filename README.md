@@ -17,10 +17,10 @@ Store a new random password in secrets.
 
 Store the parameters for `xcrun notarytool submit` in secrets.
 
-* `APPLE_NOTARYTOOL_ID`
-* `APPLE_NOTARYTOOL_TEAM_ID`
-* `APPLE_NOTARYTOOL_PASSWORD`
+* `NOTARYTOOL_APPLE_ID`
+* `NOTARYTOOL_TEAM_ID`
+* `NOTARYTOOL_PASSWORD`
 
 Store the parameters for `codesign` in secrets.
 
-* `APPLE_CODESIGN_ID`
+* `CODESIGN_APPLE_ID`
