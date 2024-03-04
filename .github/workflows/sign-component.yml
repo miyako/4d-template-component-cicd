@@ -11,15 +11,14 @@ jobs:
     
     - name: install credentials
       run: |
-        CERTIFICATE_PATH="${RUNNER_TEMP}/Developer ID Application.p12"
-        ENTITLEMENTS_PATH="${RUNNER_TEMP}/4D.entitlements"
-        LOG_PATH=${RUNNER_TEMP}/SignApp.log
+        CERTIFICATE_PATH="${PWD}/Developer ID Application.p12"
+        ENTITLEMENTS_PATH="${PWD}/4D.entitlements"
+        LOG_PATH="${PWD}/SignApp.log"
         echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_ENV        
         echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
         echo "LOG_PATH=${LOG_PATH}" >> $GITHUB_ENV
         
-        # KEYCHAIN_PATH=${RUNNER_TEMP}/temp.keychain-db
-        KEYCHAIN_PATH=./temp.keychain-db
+        KEYCHAIN_PATH="${PWD}/temp.keychain-db"
         echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
         
         echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
