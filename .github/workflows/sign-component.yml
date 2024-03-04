@@ -43,18 +43,35 @@ jobs:
         build: latest
         arch: x86
 
-    - name: build component
+    - name: build
       id: build
       uses: miyako/4D/.github/actions/build-component@v1
       with:
         build_dir: build
         build_project_path: example/Project/example.4DProject  
 
-    - name: sign component
+    - name: sign
       id: sign
-      uses: miyako/4D/.github/actions/sign-component@v1
+      uses: miyako/4D/.github/actions/sign-app@v1
       with:
         Entitlements: ${{ env.ENTITLEMENTS_PATH }} 
         nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
         PathApp: build/Components/example.4dbase       
         LogPath: ${{ env.LOG_PATH }}     
+
+    - name: prepare for distribution
+      run: |
+        PRODUCT_PATH="${PRODUCT_PATH}"
+        DMG_PATH="${PRODUCT_PATH}.dmg"
+        rm -f "${DMG_PATH}"
+        hdiutil create -format UDBZ -plist -srcfolder "${PRODUCT_PATH}" "${DMG_PATH}"
+        xcrun notarytool submit --apple-id "${NOTARYTOOL_APPLE_ID}" --password="$NOTARYTOOL_PASSWORD" --team-id "${NOTARYTOOL_TEAM_ID}" "${DMG_PATH}" --wait
+        xcrun stapler staple "${DMG_PATH}"
+      shell: bash
+      env: 
+        PRODUCT_PATH: build/Components/example.4dbase
+        PRODUCT_NAME: example
+        NOTARYTOOL_APPLE_ID: ${{ secrets.NOTARYTOOL_APPLE_ID }}
+        NOTARYTOOL_PASSWORD: ${{ secrets.NOTARYTOOL_PASSWORD }}
+        NOTARYTOOL_TEAM_ID: ${{ secrets.NOTARYTOOL_TEAM_ID }}
+        
