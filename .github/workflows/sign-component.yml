@@ -42,5 +42,11 @@ jobs:
       uses: miyako/4D/.github/actions/build-component@v1
       with:
         build_dir: build
-        build_project_path: example/Project/example.4DProject    
-        
+        build_project_path: example/Project/example.4DProject  
+
+    - name: sign component
+      id: sign
+      uses: miyako/4D/.github/actions/sign-component@v1
+      with:
+        nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
+        PathApp: build/Components/example.4dbase       
