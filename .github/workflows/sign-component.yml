@@ -21,8 +21,8 @@ jobs:
         KEYCHAIN_PATH=${RUNNER_TEMP}/temp.keychain-db
         echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
         
-        echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o ${CERTIFICATE_PATH}
-        echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o ${ENTITLEMENTS_PATH}
+        echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
+        echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o "${ENTITLEMENTS_PATH}"
         
         security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
         security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
