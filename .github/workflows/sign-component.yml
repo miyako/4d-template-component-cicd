@@ -33,37 +33,3 @@ jobs:
         APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
         KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         CODESIGN_ENTITLEMENTS: ${{ secrets.CODESIGN_ENTITLEMENTS }}
-
-    - name: checkout 
-      uses: actions/checkout@v4
-
-    - name: get tool4d
-      id: get
-      uses: miyako/4D/.github/actions/get-tool@v1
-      with:
-        platform: macos
-        branch: 20.x
-        version: 20.2
-        build: latest
-        arch: x86
-
-    - name: build component
-      id: build
-      uses: miyako/4D/.github/actions/build-component@v1
-      with:
-        build_dir: build
-        build_project_path: example/Project/example.4DProject
-        
-    - name: sign
-      id: sign
-      uses: miyako/4D/.github/actions/sign-app@v1
-      with:
-        Entitlements: ${{ env.ENTITLEMENTS_PATH }} 
-        nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
-        PathApp: build/Components/example.4dbase       
-        LogPath: ${{ env.LOG_PATH }}   
-        keychain: ${{ env.KEYCHAIN_PATH }}
-
-    # - name: delete keychain
-    #  run: |
-    #    security delete-keychain "${KEYCHAIN_PATH}"
