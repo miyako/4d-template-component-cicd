@@ -54,6 +54,7 @@ jobs:
       id: sign
       uses: miyako/4D/.github/actions/sign-component@v1
       with:
+        Entitlements: ${{ env.ENTITLEMENTS_PATH }} 
         nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
         PathApp: build/Components/example.4dbase       
-        Entitlements: ${{ env.ENTITLEMENTS_PATH }}    
+        LogPath: ${{ env.LOG_PATH }}     
