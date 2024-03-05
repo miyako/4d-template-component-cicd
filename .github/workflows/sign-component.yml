@@ -12,6 +12,18 @@ jobs:
   sign:
     runs-on: [macos, self-hosted]
     steps:
+
+    - name: setup
+      run: |
+        KEYCHAIN_PATH="${PWD}/temp.keychain-db"
+        echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
+
+    - name: delete keychain
+      continue-on-error: true
+      run: |
+        security delete-keychain "${KEYCHAIN_PATH}"
+      env:   
+        KEYCHAIN_PATH: ${{ env.KEYCHAIN_PATH }}
     
     - name: install credentials
       continue-on-error: true
@@ -23,10 +35,7 @@ jobs:
         echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
         echo "LOG_PATH=${LOG_PATH}" >> $GITHUB_ENV
         echo "COMPONENT_PATH=${PWD}/${BUILD_DIR}/Components/${PRODUCT_NAME}.4dbase" >> $GITHUB_ENV
-        
-        KEYCHAIN_PATH="${PWD}/temp.keychain-db"
-        echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
-        
+
         echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
         echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o "${ENTITLEMENTS_PATH}"
         
