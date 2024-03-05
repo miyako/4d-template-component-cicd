@@ -13,6 +13,9 @@ jobs:
     runs-on: [macos, self-hosted]
     steps:
 
+    - name: checkout 
+      uses: actions/checkout@v4
+
     - name: setup
       run: |
         KEYCHAIN_PATH="${PWD}/temp.keychain-db"
@@ -50,9 +53,6 @@ jobs:
         CODESIGN_ENTITLEMENTS: ${{ secrets.CODESIGN_ENTITLEMENTS }}
         BUILD_DIR: ${{ env.build_dir }}
         PRODUCT_NAME: ${{ env.product_name }}
-
-    - name: checkout 
-      uses: actions/checkout@v4
 
     - name: get tool4d
       id: get
