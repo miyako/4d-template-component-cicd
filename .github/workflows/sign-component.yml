@@ -33,3 +33,9 @@ jobs:
         APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
         KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         CODESIGN_ENTITLEMENTS: ${{ secrets.CODESIGN_ENTITLEMENTS }}
+
+    - name: delete keychain
+      run: |
+        security delete-keychain "${KEYCHAIN_PATH}"
+      env:   
+        KEYCHAIN_PATH: ${{ env.KEYCHAIN_PATH }}
