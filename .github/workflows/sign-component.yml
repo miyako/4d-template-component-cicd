@@ -63,17 +63,7 @@ jobs:
         build_project_path: example/Project/example.4DProject
         
     - name: sign
-      id: sign
-      uses: miyako/4D/.github/actions/sign-app@v1
-      with:
-        Entitlements: ${{ env.ENTITLEMENTS_PATH }} 
-        nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
-        PathApp: ${{ env.COMPONENT_PATH }}       
-        LogPath: ${{ env.LOG_PATH }}   
-        keychain: ${{ env.KEYCHAIN_PATH }}
-
-    - name: delete keychain
       run: |
-        security delete-keychain "${KEYCHAIN_PATH}"
+        codesign --verbose --deep --timestamp --force --sign "Developer ID Application: keisuke miyako (Y69CWUC25B)" --options=runtime /Users/miyako/Documents/GitHub/4d-template-component-cicd/actions-runner/_work/4d-template-component-cicd/4d-template-component-cicd/build/Components/example.4dbase/Libraries/lib4d-arm64.dylib --keychain "${KEYCHAIN_PATH}"
       env:   
         KEYCHAIN_PATH: ${{ env.KEYCHAIN_PATH }}
