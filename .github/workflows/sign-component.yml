@@ -43,6 +43,7 @@ jobs:
         echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o "${ENTITLEMENTS_PATH}"
         
         security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
+        security set-keychain-settings -lut 21600 "${KEYCHAIN_PATH}"
         security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
         security import "${CERTIFICATE_PATH}" -P "${APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD}" -t cert -f pkcs12 -k "${KEYCHAIN_PATH}"
         security list-keychain -d user -s "${KEYCHAIN_PATH}"
@@ -72,8 +73,11 @@ jobs:
         build_project_path: example/Project/example.4DProject
         
     - name: sign
-      run: |
-        codesign --verbose --timestamp --options=runtime --force --sign "Developer ID Application: keisuke miyako (Y69CWUC25B)" /Users/miyako/Documents/GitHub/4d-template-component-cicd/actions-runner/_work/4d-template-component-cicd/4d-template-component-cicd/build/Components/example.4dbase/Libraries/lib4d-arm64.dylib --keychain "${KEYCHAIN_PATH}"
-      env:   
-        KEYCHAIN_PATH: ${{ env.KEYCHAIN_PATH }}
-
+      id: sign
+      uses: miyako/4D/.github/actions/sign-app@v1
+      with:
+        Entitlements: ${{ env.ENTITLEMENTS_PATH }} 
+        nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
+        PathApp: build/Components/example.4dbase       
+        LogPath: ${{ env.LOG_PATH }}   
+        keychain: ${{ env.KEYCHAIN_PATH }}
