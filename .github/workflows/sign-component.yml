@@ -10,10 +10,11 @@ env:
 jobs:
 
   bump:
+    permissions: write-all
     if: ${{ github.event_name == 'workflow_dispatch' }}
     uses: miyako/4D/.github/workflows/bump.yml@v1
     with:
-      mode: ${{ github.event.inputs.mode }} 
+      mode: patch
 
   release:
     permissions: write-all
@@ -22,9 +23,10 @@ jobs:
     uses: miyako/4D/.github/workflows/create-release.yml@v1
     with:
       version: ${{ needs.bump.outputs.version }}
-      mode: ${{ needs.bump.outputs.mode }} 
+      mode: patch
 
   sign:
+    permissions: write-all
     needs: 
     - release
     runs-on: [macos-latest]
