@@ -3,6 +3,10 @@ name: Sign Component
 on: 
   workflow_dispatch:
 
+env:
+  build_dir: build
+  product_name: example
+
 jobs:
 
   sign:
@@ -18,6 +22,7 @@ jobs:
         echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_ENV        
         echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
         echo "LOG_PATH=${LOG_PATH}" >> $GITHUB_ENV
+        echo "COMPONENT_PATH=${PWD}/${BUILD_DIR}/Components/${PRODUCT_NAME}.4dbase" >> $GITHUB_ENV
         
         KEYCHAIN_PATH="${PWD}/temp.keychain-db"
         echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
@@ -34,6 +39,18 @@ jobs:
         APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
         KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         CODESIGN_ENTITLEMENTS: ${{ secrets.CODESIGN_ENTITLEMENTS }}
+        BUILD_DIR: ${{ env.build_dir }}
+        PRODUCT_NAME: ${{ env.product_name }}
+        
+    - name: sign
+      id: sign
+      uses: miyako/4D/.github/actions/sign-app@v1
+      with:
+        Entitlements: ${{ env.ENTITLEMENTS_PATH }} 
+        nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
+        PathApp: ${{ env.ENTITLEMENTS_PATH }}       
+        LogPath: ${{ env.LOG_PATH }}   
+        keychain: ${{ env.COMPONENT_PATH }}
 
     - name: delete keychain
       run: |
