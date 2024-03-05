@@ -68,7 +68,7 @@ jobs:
       uses: miyako/4D/.github/actions/build-component@v1
       with:
         build_dir: ${{ env.build_dir }}
-        build_project_path: ${{ end.BUILD_PROJECT_PATH }}
+        build_project_path: ${{ env.BUILD_PROJECT_PATH }}
         
     - name: sign
       id: sign
