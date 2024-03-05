@@ -4,6 +4,8 @@ A template repository for 4D component developement
 
 [Installing an Apple certificate on macOS runners for Xcode development](https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development)
 
+c.f. https://localazy.com/blog/how-to-automatically-sign-macos-apps-using-github-actions
+
 # Usage
 
 From Xcode or Keychain, [export signing certificate](https://help.apple.com/xcode/mac/current/#/dev154b28f09). You will be asked to set a password.
