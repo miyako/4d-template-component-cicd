@@ -64,6 +64,7 @@ jobs:
         
     - name: sign
       run: |
-        codesign --verbose --deep --timestamp --force --sign "Developer ID Application: keisuke miyako (Y69CWUC25B)" --options=runtime /Users/miyako/Documents/GitHub/4d-template-component-cicd/actions-runner/_work/4d-template-component-cicd/4d-template-component-cicd/build/Components/example.4dbase/Libraries/lib4d-arm64.dylib --keychain "${KEYCHAIN_PATH}"
+        codesign --verbose --timestamp --options=runtime --force --sign "Developer ID Application: keisuke miyako (Y69CWUC25B)" /Users/miyako/Documents/GitHub/4d-template-component-cicd/actions-runner/_work/4d-template-component-cicd/4d-template-component-cicd/build/Components/example.4dbase/Libraries/lib4d-arm64.dylib --keychain "${KEYCHAIN_PATH}"
       env:   
         KEYCHAIN_PATH: ${{ env.KEYCHAIN_PATH }}
+
