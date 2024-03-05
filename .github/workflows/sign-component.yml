@@ -9,13 +9,31 @@ env:
 
 jobs:
 
+  bump:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    uses: miyako/4D/.github/workflows/bump.yml@v1
+    with:
+      mode: ${{ github.event.inputs.mode }} 
+
+  release:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: bump
+    uses: miyako/4D/.github/workflows/create-release.yml@v1
+    with:
+      version: ${{ needs.bump.outputs.version }}
+      mode: ${{ needs.bump.outputs.mode }} 
+
   sign:
+    needs: 
+    - release
     runs-on: [macos-latest]
     steps:
 
     - name: checkout 
       uses: actions/checkout@v4
-
+      with:
+        ref: ${{ github.ref }}
+          
     - name: setup
       run: |
         KEYCHAIN_PATH="${PWD}/temp.keychain-db"
@@ -82,3 +100,13 @@ jobs:
         team_id: ${{ secrets.NOTARYTOOL_TEAM_ID }}   
         password: ${{ secrets.NOTARYTOOL_PASSWORD }}
         path: ${{ env.PRODUCT_PATH }}
+
+    - name: upload product
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.release.outputs.upload_url  }}
+        asset_path: ${{ steps.sign.outputs.dmg_path }}
+        asset_name: example.dmg
+        asset_content_type: application/octet-stream    
