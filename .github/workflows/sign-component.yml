@@ -10,6 +10,7 @@ jobs:
     steps:
     
     - name: install credentials
+      continue-on-error: true
       run: |
         CERTIFICATE_PATH="${PWD}/Developer ID Application.p12"
         ENTITLEMENTS_PATH="${PWD}/4D.entitlements"
