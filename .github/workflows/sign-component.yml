@@ -16,6 +16,7 @@ jobs:
       mode: ${{ github.event.inputs.mode }} 
 
   release:
+    permissions: write-all
     if: ${{ github.event_name == 'workflow_dispatch' }}
     needs: bump
     uses: miyako/4D/.github/workflows/create-release.yml@v1
