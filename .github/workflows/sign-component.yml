@@ -10,7 +10,7 @@ env:
 jobs:
 
   sign:
-    runs-on: [macos, self-hosted]
+    runs-on: [macos-latest]
     steps:
 
     - name: checkout 
@@ -19,7 +19,16 @@ jobs:
     - name: setup
       run: |
         KEYCHAIN_PATH="${PWD}/temp.keychain-db"
+        CERTIFICATE_PATH="${PWD}/Developer ID Application.p12"
+        ENTITLEMENTS_PATH="${PWD}/4D.entitlements"
         echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_ENV
+        echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_ENV        
+        echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
+        echo "PRODUCT_PATH=${PWD}/${BUILD_DIR}/Components/${PRODUCT_NAME}.4dbase" >> $GITHUB_ENV
+        echo "BUILD_PROJECT_PATH=${PRODUCT_NAME}/Project/${PRODUCT_NAME}.4DProject" >> $GITHUB_ENV
+      env:
+        BUILD_DIR: ${{ env.build_dir }}
+        PRODUCT_NAME: ${{ env.product_name }}
 
     - name: delete keychain
       continue-on-error: true
@@ -30,18 +39,9 @@ jobs:
     
     - name: install credentials
       continue-on-error: true
-      run: |
-        CERTIFICATE_PATH="${PWD}/Developer ID Application.p12"
-        ENTITLEMENTS_PATH="${PWD}/4D.entitlements"
-        LOG_PATH="${PWD}/SignApp.log"
-        echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_ENV        
-        echo "ENTITLEMENTS_PATH=${ENTITLEMENTS_PATH}" >> $GITHUB_ENV
-        echo "LOG_PATH=${LOG_PATH}" >> $GITHUB_ENV
-        echo "COMPONENT_PATH=${PWD}/${BUILD_DIR}/Components/${PRODUCT_NAME}.4dbase" >> $GITHUB_ENV
-
+      run: |        
         echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
         echo -n "${CODESIGN_ENTITLEMENTS}" | base64 --decode -o "${ENTITLEMENTS_PATH}"
-        
         security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
         security set-keychain-settings -lut 21600 "${KEYCHAIN_PATH}"
         security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
@@ -52,9 +52,7 @@ jobs:
         APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
         KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         CODESIGN_ENTITLEMENTS: ${{ secrets.CODESIGN_ENTITLEMENTS }}
-        BUILD_DIR: ${{ env.build_dir }}
-        PRODUCT_NAME: ${{ env.product_name }}
-
+        
     - name: get tool4d
       id: get
       uses: miyako/4D/.github/actions/get-tool@v1
@@ -69,15 +67,16 @@ jobs:
       id: build
       uses: miyako/4D/.github/actions/build-component@v1
       with:
-        build_dir: build
-        build_project_path: example/Project/example.4DProject
+        build_dir: ${{ env.build_dir }}
+        build_project_path: ${{ end.BUILD_PROJECT_PATH }}
         
     - name: sign
       id: sign
       uses: miyako/4D/.github/actions/sign-app@v1
       with:
-        Entitlements: ${{ env.ENTITLEMENTS_PATH }} 
-        nameCertificat: ${{ secrets.CODESIGN_APPLE_ID }}
-        PathApp: build/Components/example.4dbase       
-        LogPath: ${{ env.LOG_PATH }}   
+        sign: ${{ secrets.CODESIGN_APPLE_ID }} 
         keychain: ${{ env.KEYCHAIN_PATH }}
+        apple_id: ${{ secrets.NOTARYTOOL_APPLE_ID }}         
+        team_id: ${{ secrets.NOTARYTOOL_TEAM_ID }}   
+        password: ${{ secrets.NOTARYTOOL_PASSWORD }}
+        path: ${{ env.PRODUCT_PATH }}
