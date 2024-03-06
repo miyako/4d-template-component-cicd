@@ -36,3 +36,5 @@ jobs:
         zip_path: ${{ steps.setup.outputs.zip_path }}    
         tag_name: "test"   
         release_name: "test"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
