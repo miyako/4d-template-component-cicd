@@ -11,15 +11,22 @@ jobs:
 
       - name: checkout 
         uses: actions/checkout@v4
+
+      - name: setup  
+        id: setup
+        run: |
+          echo "project_path=${GITHUB_WORKSPACE}/example/Project/example.4DProject" >> $GITHUB_OUTPUT
         
       - name: build
         id: build
         uses: miyako/4D/.github/actions/build-component@v1
         with: 
-          project_path: example/Project/example.4DProject
+          project_path: ${{ steps.setup.outputs.project_path }}
 
       - name: print result
         run: |
+          echo "project_path: ${project_path}"
           echo "product_path: ${product_path}"
         env: 
+          project_path: ${{ steps.setup.outputs.project_path }}
           product_path: ${{ steps.build.outputs.product_path }}
