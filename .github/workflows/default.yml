@@ -1,0 +1,48 @@
+name: Publish
+  
+on:
+  push:
+    branches:
+    - main
+    paths:
+      - '*/Project/Sources/**/*.4dm'
+      - '*/Project/Sources/*/*.4DForm'
+      - '*/Project/Sources/*.4DCatalog'
+      - '*/Project/Resources/**'
+  workflow_dispatch:
+    inputs:
+        mode:
+          type: choice
+          description: semantic versioning
+          options: 
+          - patch
+          - minor 
+          - major
+          required: true
+
+jobs:
+
+  publish:
+    runs-on: [macos-latest]
+    steps:
+
+      - name: configure
+        id: configure
+        run: |
+          if [ ${mode} -eq '' ]
+          then
+          echo "mode=patch" >> $GITHUB_OUTPUT          
+          else
+          echo "mode=${mode}" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+        env:
+          mode: ${{ inputs.mode }} 
+
+      - name: print result
+        run: |
+          echo "mode: ${mode}"
+        env: 
+          platform: ${{ steps.configure.outputs.mode }}
+
+          
