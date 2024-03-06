@@ -22,6 +22,6 @@ jobs:
     
       - name: set version
         id: get
-        uses: miyako/4D/.github/actions/tool4d-get-version@v1
+        uses: miyako/4D/.github/actions/package-set-version@v1
         with:
           mode: ${{ inputs.mode }}
