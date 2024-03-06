@@ -21,7 +21,7 @@ Whenever you push changes to your `main` branch, the following things happen:
 
 The repository must have `package.json` file  at the root level. 
 
-**Note**: The format is obviously inspired by, but not necessarily compatible with, `npm`.
+**Note**: The format is obviously inspired by, but not necessarily relate to, `npm`. In future versions, 4D may roll out its own way of managing dependencies.
 
 |Path|Type|Description
 |:-|:-:|:-|
