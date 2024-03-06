@@ -8,11 +8,11 @@ You may clone it to get started with your own 4D component development on GitHub
 
 ### Development
 
-Whenever you push changes to your `main` branch, the default workflow is triggered in `patch` mode.
+Whenever you push changes to your `main` branch, the default workflow is automatically triggered in `patch` mode.
 
 ### Deployment
 
-You can manually dispatch the default workflow in either `patch` `minor` `major` mode.
+You can manually dispatch the default workflow for any branch, in either `patch` `minor` `major` mode.
 
 ## Workflow
 
