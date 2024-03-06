@@ -21,7 +21,7 @@ on:
           required: true
 
 env: 
-  project_path: ${{ env.GITHUB_WORKSPACE }}/example/Project/example.4DProject
+  project_path: example/Project/example.4DProject
   
 jobs:
 
@@ -37,6 +37,7 @@ jobs:
           else
           echo "mode=${mode}" >> $GITHUB_OUTPUT
           fi
+          echo "project_path=${GITHUB_WORKSPACE}/${project_path}" >> $GITHUB_OUTPUT 
         shell: bash
         env:
           mode: ${{ inputs.mode }} 
@@ -47,5 +48,6 @@ jobs:
           echo: "project_path: ${project_path}"
         env: 
           mode: ${{ steps.configure.outputs.mode }}
+          project_path: ${{ steps.configure.outputs.project_path }}
 
           
