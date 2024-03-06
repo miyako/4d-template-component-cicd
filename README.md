@@ -36,9 +36,11 @@ In addition to arbitrary meta properties, you should provide the following build
 
 **Note**: Free GitHub hosted macOS runners are running on Intel. If you have a subscription, you can select [ARM hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners).
 
-# External [Reusable Worlflow Actions](https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows)
+# Reusable Worlflow Actions
 
-* miyako/4D/.github/actions/tool4d-get-version@v1
+If your repository is not allowed to execute [external workflows]((https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows), clone it.
+
+* [miyako/4D/.github/actions/tool4d-get-version@v1](https://github.com/miyako/4D/blob/v1/.github/actions/tool4d-get-version/action.yml)
 
 # References
 
