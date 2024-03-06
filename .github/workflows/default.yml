@@ -20,6 +20,9 @@ on:
           - major
           required: true
 
+env: 
+  project_path: ${{ env.GITHUB_WORKSPACE }}/example/Project/example.4DProject
+  
 jobs:
 
   publish:
@@ -41,6 +44,7 @@ jobs:
       - name: print result
         run: |
           echo "mode: ${mode}"
+          echo: "project_path: ${project_path}"
         env: 
           mode: ${{ steps.configure.outputs.mode }}
 
