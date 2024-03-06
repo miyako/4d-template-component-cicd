@@ -11,8 +11,5 @@
     "version": "20.2",
     "build": "latest",
     "arch": "x86"
-  },
-  "test": {
-    "startup_method": "test"
   }
 }
