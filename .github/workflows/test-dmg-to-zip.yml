@@ -1,0 +1,23 @@
+name: Test - Disk Image To Zip
+
+on: 
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    runs-on: [macos-latest]
+    steps:
+
+    - name: download dmg
+      run: |     
+        mountpoint="${GITHUB_TEMP}/temp"
+        curl "https://github.com/miyako/4d-template-component-cicd/releases/download/patch-0.0.2/example.dmg" -o example.dmg -sL
+        hdiutil attach -nobrowse -noverify -mountpoint "${mountpoint}"
+        cp -a "${mountpoint}" "${GITHUB_TEMP}/${name}"
+        ditto -c -k "${GITHUB_TEMP}/${name}" "${name}.zip"
+        diskutil unmount "${mountpoint}"
+        rm -f "${GITHUB_TEMP}/${name}"
+        ls "${GITHUB_TEMP}"
+      env:
+        name: example
