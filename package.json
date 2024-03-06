@@ -1,6 +1,8 @@
 {
-  "name": "4d-template-component-cicd",
-  "version": "0.0.1",
+  "name": "example",
+  "description": "An example 4D component",
   "author": "Keisuke Miyako <keisuke.miyako@4d.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": "https://github.com/miyako/4d-template-component-cicd",
+  "version": "0.0.1"
 }
