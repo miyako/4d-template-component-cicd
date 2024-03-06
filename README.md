@@ -38,7 +38,7 @@ In addition to arbitrary meta properties, you should provide the following build
 
 # Reusable Worlflow Actions
 
-If your repository is not allowed to execute [external workflows]((https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows), clone it.
+If your repository is not allowed to execute [external workflows](https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows), clone these.
 
 * [miyako/4D/.github/actions/tool4d-get-version@v1](https://github.com/miyako/4D/blob/v1/.github/actions/tool4d-get-version/action.yml)
 
