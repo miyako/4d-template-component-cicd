@@ -11,7 +11,7 @@ jobs:
     
       - name: get values
         id: get
-        uses: miyako/4D/.github/actions/get-tool@v1
+        uses: miyako/4D/.github/actions/tool4d-get-version@v1
 
       - name: print result
         run: |
