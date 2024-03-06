@@ -28,11 +28,11 @@ In addition to arbitrary meta properties, you should provide the following build
 |Path|Type|Description
 |:-|:-:|:-|
 |version|Text|[semantic versioning 2.0.0](https://semver.org)|
-|too4d.platform|Text|always `macos`|
-|too4d.branch|Text|default=`20.x`|
-|too4d.version|Text|default=`20.2`|
-|too4d.build|Text|default=latest|
-|too4d.arch|Text|always `x86`|
+|tool.platform|Text|always `macos`|
+|tool.branch|Text|default=`20.x`|
+|tool.version|Text|default=`20.2`|
+|tool.build|Text|default=latest|
+|tool.arch|Text|always `x86`|
 
 **Note**: Free GitHub hosted macOS runners are running on Intel. If you have a subscription, you can select [ARM hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners).
 
