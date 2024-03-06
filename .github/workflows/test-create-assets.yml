@@ -1,0 +1,38 @@
+name: Test - Create Assets
+
+on: 
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    runs-on: [macos-latest]
+    steps:
+
+    - name: setup 
+      id: setup
+      run: |     
+        echo dmg_path="${GITHUB_WORKSPACE}/example.dmg" >> ${GITHUB_OUTPUT}
+        echo zip_path="${GITHUB_WORKSPACE}/example.zip" >> ${GITHUB_OUTPUT}
+   
+    - name: download dmg   
+      run: |     
+        curl "https://github.com/miyako/4d-template-component-cicd/releases/download/patch-0.0.2/example.dmg" -o "${dmg_path}" -sL
+      env:
+        dmg_path: ${{ steps.setup.outputs.dmg_path }}
+
+    - name: create
+      id: create
+      uses: miyako/4D/.github/actions/deployment-create-zip@v1
+      with: 
+        dmg_path: ${{ steps.setup.outputs.dmg_path }}
+        zip_path: ${{ steps.setup.outputs.zip_path }}
+
+    - name: upload assets
+      id: upload
+      uses: miyako/4D/.github/actions/deployment-release-assets@v1
+      with: 
+        dmg_path: ${{ steps.setup.outputs.dmg_path }}
+        zip_path: ${{ steps.setup.outputs.zip_path }}    
+        tag_name: "test"   
+        release_name: "test"
