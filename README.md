@@ -95,7 +95,7 @@ The following actions are used by the default workflow. If your repository is no
 
 In addition, the following GitHub workflow actions are used internally.
 
-* [`actions/upload-release-asset`](https://github.com/actions/upload-release-asset) 
+* [`actions/upload-release-asset@v1`](https://github.com/actions/upload-release-asset) 
 * [`actions/create-release@v1`](https://github.com/actions/actions/create-release)
 
 # References
