@@ -14,7 +14,12 @@ jobs:
 
       - name: print result
         run: |
-          echo ${}
+          echo "platform: ${platform}"
+          echo "branch: ${branch}"
+          echo "version: ${version}"
+          echo "build: ${build}"
+          echo "arch: ${arch}"
+          
         with: 
           platform: ${{ steps.get.outputs.platform }}
           branch: ${{ steps.get.outputs.branch }}
