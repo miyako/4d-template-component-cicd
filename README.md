@@ -6,7 +6,12 @@ This repository is configured to enable CI/CD of [4D components](https://develop
 
 You may clone it to get started with your own 4D component development on GitHub.
 
-**Note**: If you rename the project, you should modify `env.project_path` in [`default.yml`](https://github.com/miyako/4d-template-component-cicd/blob/main/.github/workflows/default.yml) which is `example/Project/example.4DProject` by default.
+**Note**: If you rename the project, you should modify `env.project_path` in [`default.yml`](https://github.com/miyako/4d-template-component-cicd/blob/main/.github/workflows/default.yml).
+
+```yml
+env: 
+  project_path: example/Project/example.4DProject
+```
 
 ### Development
 
