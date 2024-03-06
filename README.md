@@ -6,14 +6,20 @@ This repository is configured to enable CI/CD of [4D components](https://develop
 
 You may clone it to get started with your own 4D component development on GitHub.
 
-## Development Workflow
+* Development Workflow
 
-Whenever you push changes to your `main` branch, the following things happen:
+Whenever you push changes to your `main` branch, the default workflow is triggered in `patch` mode.
 
-* The project is compiled on a GitHub hosted runner (`macos-latest`) using the latest tool4d.
+* Deployment Workflow
+
+You can manually dispatch the default workflow in either `patch` `minor` `major` mode.
+
+The workflow does the following:
+
+* The project is compiled on a GitHub hosted runner (`macos-latest`) using `tool4d`.
 * The project is built as a component for ARM/Apple Silicon and AMD/Intel processors.
-* The component is sign with your Apple Developer ID Application certificate.
-* The component is notarised.
+* The component is signed with your **Apple Developer ID Application** certificate.
+* The component is submitted to Apple for notarisation.
 * The component is published under Releases.
 
 # Prerequisites
