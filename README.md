@@ -45,7 +45,7 @@ In addition to arbitrary meta properties, you should provide the following build
 
 # Reusable Workflow Actions
 
-If your repository is not allowed to execute [external workflows](https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows), clone these.
+The following actions are used by the default workflow. If your repository is not allowed to execute [external workflows](https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows), clone them.
 
 * [`miyako/4D/.github/actions/package-set-version@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/package-set-version/action.yml) - update 
 `package.json`
@@ -55,7 +55,11 @@ If your repository is not allowed to execute [external workflows](https://docs.g
 * [`miyako/4D/.github/actions/build-component@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-codesign-product/action.yml) - sign component
 * [`miyako/4D/.github/actions/deployment-codesign-product@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-create-zip/action.yml) - create .zip from .dmg
 * [`miyako/4D/.github/actions/deployment-release-assets@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-release-assets/action.yml) - upload .zip and .dmg
-* [`actions/upload-release-asset`](https://github.com/actions/upload-release-asset) - used internally by ↑
+
+In addition, the following GitHub workflow actions are used internally.
+
+* [`actions/upload-release-asset`](https://github.com/actions/upload-release-asset) 
+* [`actions/create-release@v1`](https://github.com/actions/actions/create-release)
 
 # References
 
