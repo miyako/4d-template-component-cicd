@@ -53,8 +53,8 @@ From Xcode or Keychain, [export signing certificate](https://help.apple.com/xcod
 |:-|:-|
 |`APPLE_DEVELOPER_ID_CERTIFICATE`|base64 encoded|
 |`APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD`|password to read the certificate|
-|`KEYCHAIN_PASSWORD`|an arbitrary password (used to access temporary keychain|
-|`NOTARYTOOL_APPLE_ID`|`xcrun notarytool submit` parameter
+|`KEYCHAIN_PASSWORD`|an arbitrary password (used to access temporary keychain)|
+|`NOTARYTOOL_APPLE_ID`|`xcrun notarytool submit` parameter|
 |`NOTARYTOOL_TEAM_ID`|`xcrun notarytool submit` parameter|
 |`NOTARYTOOL_PASSWORD`|`xcrun notarytool submit` parameter|
 |`CODESIGN_APPLE_ID`|`codesign`parameter|
