@@ -40,8 +40,10 @@ In addition to arbitrary meta properties, you should provide the following build
 
 If your repository is not allowed to execute [external workflows](https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows), clone these.
 
-* [miyako/4D/.github/actions/tool4d-get-version@v1](https://github.com/miyako/4D/blob/v1/.github/actions/tool4d-get-version/action.yml) - parse `package.json`
-* [actions/upload-release-asset](https://github.com/actions/upload-release-asset) - upload .dmg
+* [`miyako/4D/.github/workflows/bump.yml@v1`](https://github.com/miyako/4D/blob/v1/.github/workflows/bump.yml) - update 
+`package.json`
+* [`miyako/4D/.github/actions/tool4d-get-version@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/tool4d-get-version/action.yml) - parse `package.json`
+* [`actions/upload-release-asset`](https://github.com/actions/upload-release-asset) - upload .dmg
 
 # References
 
