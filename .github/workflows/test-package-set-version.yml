@@ -21,7 +21,13 @@ jobs:
         uses: actions/checkout@v4
     
       - name: set version
-        id: get
+        id: set
         uses: miyako/4D/.github/actions/package-set-version@v1
         with:
           mode: ${{ inputs.mode }}
+
+      - name: print result
+        run: |
+          echo "version: ${version}"
+        env: 
+          version: ${{ steps.set.outputs.version }}
