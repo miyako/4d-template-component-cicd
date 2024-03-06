@@ -75,16 +75,20 @@ jobs:
         APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
         KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         CODESIGN_ENTITLEMENTS: ${{ secrets.CODESIGN_ENTITLEMENTS }}
+
+    - name: get tool version
+      id: tool
+      uses: miyako/4D/.github/actions/tool4d-get-version@v1
         
     - name: get tool4d
       id: get
       uses: miyako/4D/.github/actions/get-tool@v1
       with:
-        platform: macos
-        branch: 20.x
-        version: 20.2
-        build: latest
-        arch: x86
+        platform: ${{ steps.tool.outputs.platform }}
+        branch: ${{ steps.tool.outputs.branch }}
+        version: ${{ steps.tool.outputs.version }}
+        build: ${{ steps.tool.outputs.build }}
+        arch: ${{ steps.tool.outputs.arch }}
 
     - name: build component
       id: build
