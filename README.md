@@ -17,6 +17,18 @@ env:
 
 Whenever you push changes to your `main` branch, the default workflow is automatically triggered in `patch` mode.
 
+```yml
+on:
+  push:
+    branches:
+    - main
+    paths:
+      - '*/Project/Sources/**/*.4dm'
+      - '*/Project/Sources/*/*.4DForm'
+      - '*/Project/Sources/*.4DCatalog'
+      - '*/Project/Resources/**'
+```
+
 ### Deployment
 
 You can manually dispatch the default workflow for any branch, in either `patch` `minor` `major` mode.
