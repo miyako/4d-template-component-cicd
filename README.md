@@ -47,7 +47,7 @@ The workflow does the following:
 
 # Prerequisites
 
-The repository must have `package.json` file  at the root level. 
+The repository must have [`package.json`](https://github.com/miyako/4d-template-component-cicd/blob/main/package.json) file  at the root level. 
 
 **Note**: The format is obviously inspired by, but not necessarily relate to, `npm`. In future versions, 4D may roll out its own way of managing dependencies.
 
