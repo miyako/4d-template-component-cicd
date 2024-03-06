@@ -33,6 +33,7 @@ In addition to arbitrary meta properties, you should provide the following build
 |tool.version|Text|default=`20.2`|
 |tool.build|Text|default=`latest`|
 |tool.arch|Text|always `x86`|
+|test.startup_method|Text|optional|
 
 **Note**: Free GitHub hosted macOS runners are running on Intel. If you have a subscription, you can select [ARM hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners).
 
