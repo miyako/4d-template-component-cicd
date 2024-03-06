@@ -1,0 +1,27 @@
+name: Test - Set Package Version
+
+on: 
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        description: semantic versioning
+        options: 
+        - patch
+        - minor 
+        - major
+        
+jobs:
+
+  test:
+    runs-on: [ubuntu-latest]
+    steps:
+    
+      - name: checkout 
+        uses: actions/checkout@v4
+    
+      - name: set version
+        id: get
+        uses: miyako/4D/.github/actions/tool4d-get-version@v1
+          with:
+            mode: ${{ inputs.mode }}
