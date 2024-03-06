@@ -27,7 +27,7 @@ jobs:
         run: |
           security delete-keychain "${KEYCHAIN_PATH}"
         env:   
-          KEYCHAIN_PATH: ${{ steps.setup.KEYCHAIN_PATH }}
+          KEYCHAIN_PATH: ${{ steps.setup.outputs.KEYCHAIN_PATH }}
 
       - name: install credentials
         continue-on-error: true
@@ -40,7 +40,7 @@ jobs:
           security import "${CERTIFICATE_PATH}" -P "${APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD}" -t cert -f pkcs12 -k "${KEYCHAIN_PATH}" -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "{$KEYCHAIN_PASSWORD} "${KEYCHAIN_PATH}"
         env:
-          CERTIFICATE_PATH: ${{ steps.setup.CERTIFICATE_PATH }}
+          CERTIFICATE_PATH: ${{ steps.setup.outputs.CERTIFICATE_PATH }}
           APPLE_DEVELOPER_ID_CERTIFICATE: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE }}
           APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
@@ -69,6 +69,11 @@ jobs:
         id: codesign
         uses: miyako/4D/.github/actions/deployment-codesign-product@v1
         with: 
+          sign: ${{ secrets.CODESIGN_APPLE_ID }} 
+          keychain: ${{ steps.setup.outputs.KEYCHAIN_PATH }}
+          apple_id: ${{ secrets.NOTARYTOOL_APPLE_ID }}         
+          team_id: ${{ secrets.NOTARYTOOL_TEAM_ID }}   
+          password: ${{ secrets.NOTARYTOOL_PASSWORD }}
           product_path: ${{ steps.build.outputs.product_path }}
 
       - name: create zip
