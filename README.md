@@ -10,7 +10,6 @@ You may clone it to get started with your own 4D component development on GitHub
 
 Whenever you push changes to your `main` branch, the following things happen:
 
-* A series of unit tests are conducted on a pair of GitHub hosted runners (`macos-latest`, `windows-latest`).
 * The project is compiled on a GitHub hosted runner (`macos-latest`) using the latest tool4d.
 * The project is built as a component for ARM/Apple Silicon and AMD/Intel processors.
 * The component is sign with your Apple Developer ID Application certificate.
@@ -33,7 +32,6 @@ In addition to arbitrary meta properties, you should provide the following build
 |tool.version|Text|default=`20.2`|
 |tool.build|Text|default=`latest`|
 |tool.arch|Text|always `x86`|
-|test.startup_method|Text|optional|
 
 **Note**: Free GitHub hosted macOS runners are running on Intel. If you have a subscription, you can select [ARM hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners).
 
