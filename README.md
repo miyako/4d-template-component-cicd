@@ -17,6 +17,21 @@ Whenever you push changes to your `main` branch, the following things happen:
 * The component is notarised.
 * The component is published under Releases.
 
+# Prerequisites
+
+The repository must have `package.json` file  at the root level. 
+
+**Note**: The format is obviously inspired by, but not necessarily compatible with, `npm`.
+
+|Path|Type|Description
+|:-|:-:|:-|
+|name|Text|(optional)|
+|description|Text|(optional)|
+|author|Text|RFC 5322 email address (optional)|
+|license|Text|(optional)|
+|repository|Text|URL (optional)|
+|version|Text|[semantic versioning 2.0.0](https://semver.org)|
+
 # References
 
 [Installing an Apple certificate on macOS runners for Xcode development](https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development)
