@@ -42,13 +42,94 @@ jobs:
         env:
           mode: ${{ inputs.mode }} 
 
-      - name: print result
-        run: |
-          echo "mode: ${mode}"
-          echo "project_path: ${project_path}"
-        env: 
-          mode: ${{ steps.configure.outputs.mode }}
+      - name: checkout 
+        uses: actions/checkout@v4
+
+      - name: set version
+        id: version
+        uses: miyako/4D/.github/actions/package-set-version@v1
+        with:
+          mode: ${{ inputs.mode }}
+
+      - name: get tool version
+        id: tool
+        uses: miyako/4D/.github/actions/tool4d-get-version@v1
+        
+      - name: get tool4d
+        id: get
+        uses: miyako/4D/.github/actions/tool4d-download@v1
+        with:
+          platform: ${{ steps.tool.outputs.platform }}
+          branch: ${{ steps.tool.outputs.branch }}
+          version: ${{ steps.tool.outputs.version }}
+          build: ${{ steps.tool.outputs.build }}
+          arch: ${{ steps.tool.outputs.arch }}
+
+      - name: build
+        id: build
+        uses: miyako/4D/.github/actions/build-component@v1
+        with: 
           project_path: ${{ steps.configure.outputs.project_path }}
 
+      - name: setup  
+        id: setup
+        run: |
+          echo "project_path=${GITHUB_WORKSPACE}/example/Project/example.4DProject" >> $GITHUB_OUTPUT
+          KEYCHAIN_PATH="${RUNNER_TEMP}/temp.keychain-db"
+          CERTIFICATE_PATH="${RUNNER_TEMP}/Developer ID Application.p12"
+          echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_OUTPUT
+          echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_OUTPUT  
 
-          
+      # cleanup in case of self-hosted runner
+      - name: delete keychain
+        continue-on-error: true
+        run: |
+          security delete-keychain "${KEYCHAIN_PATH}"
+        env:   
+          KEYCHAIN_PATH: ${{ steps.setup.outputs.KEYCHAIN_PATH }}
+
+      - name: install credentials
+        continue-on-error: true
+        run: |        
+          echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
+          security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
+          security default-keychain -s "${KEYCHAIN_PATH}"
+          security set-keychain-settings -t 21600 "${KEYCHAIN_PATH}"
+          security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
+          security import "${CERTIFICATE_PATH}" -P "${APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD}" -t cert -f pkcs12 -k "${KEYCHAIN_PATH}" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "{$KEYCHAIN_PASSWORD} "${KEYCHAIN_PATH}"
+        env:
+          CERTIFICATE_PATH: ${{ steps.setup.outputs.CERTIFICATE_PATH }}
+          APPLE_DEVELOPER_ID_CERTIFICATE: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE }}
+          APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          KEYCHAIN_PATH: ${{ steps.setup.outputs.KEYCHAIN_PATH }}
+
+      - name: codesign
+        id: codesign
+        uses: miyako/4D/.github/actions/deployment-codesign-product@v1
+        with: 
+          sign: ${{ secrets.CODESIGN_APPLE_ID }} 
+          keychain: ${{ steps.setup.outputs.KEYCHAIN_PATH }}
+          apple_id: ${{ secrets.NOTARYTOOL_APPLE_ID }}         
+          team_id: ${{ secrets.NOTARYTOOL_TEAM_ID }}   
+          password: ${{ secrets.NOTARYTOOL_PASSWORD }}
+          product_path: ${{ steps.build.outputs.product_path }}
+
+      - name: zip
+        id: zip
+        uses: miyako/4D/.github/actions/deployment-create-zip@v1
+        with: 
+          dmg_path: ${{ steps.codesign.outputs.dmg_path }}
+          zip_path: ${{ steps.codesign.outputs.zip_path }}
+
+      - name: upload assets
+        id: upload
+        uses: miyako/4D/.github/actions/deployment-release-assets@v1
+        with: 
+          dmg_path: ${{ steps.zip.outputs.dmg_path }}
+          zip_path: ${{ steps.zip.outputs.zip_path }}    
+          tag_name: ${{ steps.version.outputs.version }}   
+          release_name: ${{ steps.version.outputs.version }}  
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
