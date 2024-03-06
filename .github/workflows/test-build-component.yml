@@ -27,6 +27,7 @@ jobs:
         run: |
           echo "project_path: ${project_path}"
           echo "product_path: ${product_path}"
+          ls .
         env: 
           project_path: ${{ steps.setup.outputs.project_path }}
           product_path: ${{ steps.build.outputs.product_path }}
