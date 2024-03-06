@@ -43,7 +43,7 @@ The workflow does the following:
 1. The project is built as a component for ARM/Apple Silicon and AMD/Intel processors.
 1. The component is signed with your **Apple Developer ID Application** certificate.
 1. The component is submitted to Apple for notarisation.
-1. The component is published under Releases.
+1. The component is published under Releases (.zip and .dmg format).
 
 # Prerequisites
 
