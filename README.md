@@ -50,6 +50,7 @@ If your repository is not allowed to execute [external workflows](https://docs.g
 * [`miyako/4D/.github/actions/package-set-version@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/package-set-version/action.yml) - update 
 `package.json`
 * [`miyako/4D/.github/actions/tool4d-get-version@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/tool4d-get-version/action.yml) - parse `package.json`
+* [`miyako/4D/.github/actions/tool4d-download@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/tool4d-download/action.yml) - download tool4d
 * [`miyako/4D/.github/actions/deployment-create-zip@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-create-zip/action.yml) - create .zip from .dmg
 * [`miyako/4D/.github/actions/deployment-release-assets@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-release-assets/action.yml) - upload .zip and .dmg
 * [`actions/upload-release-asset`](https://github.com/actions/upload-release-asset) - used internally by ↑
