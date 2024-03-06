@@ -6,6 +6,7 @@ on:
 jobs:
 
   test:
+    permissions: write-all
     runs-on: [macos-latest]
     steps:
 
