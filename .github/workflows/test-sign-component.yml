@@ -16,6 +16,34 @@ jobs:
         id: setup
         run: |
           echo "project_path=${GITHUB_WORKSPACE}/example/Project/example.4DProject" >> $GITHUB_OUTPUT
+          KEYCHAIN_PATH="${RUNNER_TEMP}/temp.keychain-db"
+          CERTIFICATE_PATH="${RUNNER_TEMP}/Developer ID Application.p12"
+          echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_OUTPUT
+          echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_OUTPUT  
+
+      # cleanup in case of self-hosted runner
+      - name: delete keychain
+        continue-on-error: true
+        run: |
+          security delete-keychain "${KEYCHAIN_PATH}"
+        env:   
+          KEYCHAIN_PATH: ${{ steps.setup.KEYCHAIN_PATH }}
+
+      - name: install credentials
+        continue-on-error: true
+        run: |        
+          echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
+          security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
+          security default-keychain -s "${KEYCHAIN_PATH}"
+          security set-keychain-settings -t 21600 "${KEYCHAIN_PATH}"
+          security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
+          security import "${CERTIFICATE_PATH}" -P "${APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD}" -t cert -f pkcs12 -k "${KEYCHAIN_PATH}" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "{$KEYCHAIN_PASSWORD} "${KEYCHAIN_PATH}"
+        env:
+          CERTIFICATE_PATH: ${{ steps.setup.CERTIFICATE_PATH }}
+          APPLE_DEVELOPER_ID_CERTIFICATE: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE }}
+          APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
 
       - name: get tool version
         id: tool
@@ -37,11 +65,20 @@ jobs:
         with: 
           project_path: ${{ steps.setup.outputs.project_path }}
 
-      - name: print result
-        run: |
-          echo "project_path: ${project_path}"
-          echo "product_path: ${product_path}"
-          ls .
-        env: 
-          project_path: ${{ steps.setup.outputs.project_path }}
+      - name: codesign
+        id: codesign
+        uses: miyako/4D/.github/actions/deployment-codesign-product@v1
+        with: 
           product_path: ${{ steps.build.outputs.product_path }}
+
+      - name: create zip
+        id: create
+        uses: miyako/4D/.github/actions/deployment-create-zip@v1
+        with: 
+          dmg_path: ${{ steps.codesign.outputs.dmg_path }}
+          zip_path: ${{ steps.codesign.outputs.zip_path }}
+        
+      - name: print result    
+        run: |     
+          ls .
+          
