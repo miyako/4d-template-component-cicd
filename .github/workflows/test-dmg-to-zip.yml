@@ -23,8 +23,7 @@ jobs:
     - name: create
       uses: miyako/4D/.github/actions/deployment-create-zip@v1
       with: 
-        dmg_path: ${{ steps.setup.outputs
-.dmg_path }}
+        dmg_path: ${{ steps.setup.outputs.dmg_path }}
 
     - name: check      
       run: |     
