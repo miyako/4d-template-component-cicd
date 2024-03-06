@@ -1,0 +1,47 @@
+name: Test - Sign Component
+
+on: 
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    runs-on: [macos-latest]
+    steps:
+
+      - name: checkout 
+        uses: actions/checkout@v4
+
+      - name: setup  
+        id: setup
+        run: |
+          echo "project_path=${GITHUB_WORKSPACE}/example/Project/example.4DProject" >> $GITHUB_OUTPUT
+
+      - name: get tool version
+        id: tool
+        uses: miyako/4D/.github/actions/tool4d-get-version@v1
+        
+      - name: get tool4d
+        id: get
+        uses: miyako/4D/.github/actions/tool4d-download@v1
+        with:
+          platform: ${{ steps.tool.outputs.platform }}
+          branch: ${{ steps.tool.outputs.branch }}
+          version: ${{ steps.tool.outputs.version }}
+          build: ${{ steps.tool.outputs.build }}
+          arch: ${{ steps.tool.outputs.arch }}
+        
+      - name: build
+        id: build
+        uses: miyako/4D/.github/actions/build-component@v1
+        with: 
+          project_path: ${{ steps.setup.outputs.project_path }}
+
+      - name: print result
+        run: |
+          echo "project_path: ${project_path}"
+          echo "product_path: ${product_path}"
+          ls .
+        env: 
+          project_path: ${{ steps.setup.outputs.project_path }}
+          product_path: ${{ steps.build.outputs.product_path }}
