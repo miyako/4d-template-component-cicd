@@ -10,6 +10,7 @@ jobs:
     steps:
 
     - name: setup 
+      id: setup
       run: |     
         echo dmg_path="${GITHUB_WORKSPACE}/example.dmg" >> ${GITHUB_OUTPUT}
    
