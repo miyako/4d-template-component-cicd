@@ -36,6 +36,10 @@ In addition to arbitrary meta properties, you should provide the following build
 
 **Note**: Free GitHub hosted macOS runners are running on Intel. If you have a subscription, you can select [ARM hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners).
 
+# External [Reusable Worlflow Actions](https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows)
+
+* miyako/4D/.github/actions/tool4d-get-version@v1
+
 # References
 
 [Installing an Apple certificate on macOS runners for Xcode development](https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development)
