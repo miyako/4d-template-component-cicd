@@ -77,6 +77,10 @@ In addition, the following GitHub workflow actions are used internally.
 * [`actions/upload-release-asset`](https://github.com/actions/upload-release-asset) 
 * [`actions/create-release@v1`](https://github.com/actions/actions/create-release)
 
+# Notes
+
+You should modify `env.project_path` in [`default.yml`](https://github.com/miyako/4d-template-component-cicd/blob/main/.github/workflows/default.yml) to reference the project.
+
 # References
 
 [Installing an Apple certificate on macOS runners for Xcode development](https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development)
