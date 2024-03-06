@@ -33,6 +33,8 @@ on:
 
 You can manually dispatch the default workflow for any branch, in either `patch` `minor` `major` mode.
 
+<img src="https://github.com/miyako/4d-template-component-cicd/assets/1725068/552b0968-5672-42d8-a1b9-a94711b8bfb8" style="height:240px;width:auto;" />
+
 ## Workflow
 
 The workflow does the following:
