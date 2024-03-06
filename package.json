@@ -4,7 +4,7 @@
   "author": "Keisuke Miyako <keisuke.miyako@4d.com>",
   "license": "MIT",
   "repository": "https://github.com/miyako/4d-template-component-cicd",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "tool": {
     "platform": "macos",
     "branch": "20.x",
