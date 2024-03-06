@@ -23,14 +23,18 @@ The repository must have `package.json` file  at the root level.
 
 **Note**: The format is obviously inspired by, but not necessarily relate to, `npm`. In future versions, 4D may roll out its own way of managing dependencies.
 
+In addition to arbitrary meta properties, you should provide the following build parameters:
+
 |Path|Type|Description
 |:-|:-:|:-|
-|name|Text|(optional)|
-|description|Text|(optional)|
-|author|Text|RFC 5322 email address (optional)|
-|license|Text|(optional)|
-|repository|Text|URL (optional)|
 |version|Text|[semantic versioning 2.0.0](https://semver.org)|
+|too4d.platform|Text|always `macos`|
+|too4d.branch|Text|default=`20.x`|
+|too4d.version|Text|default=`20.2`|
+|too4d.build|Text|default=latest|
+|too4d.arch|Text|always `x86`|
+
+**Note**: Free GitHub hosted macOS runners are running on Intel. If you have a subscription, you can select [ARM hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners).
 
 # References
 
