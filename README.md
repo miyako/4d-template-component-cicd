@@ -52,8 +52,8 @@ The following actions are used by the default workflow. If your repository is no
 * [`miyako/4D/.github/actions/tool4d-get-version@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/tool4d-get-version/action.yml) - parse `package.json`
 * [`miyako/4D/.github/actions/tool4d-download@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/tool4d-download/action.yml) - download `tool4d`
 * [`miyako/4D/.github/actions/build-component@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/build-component/action.yml) - build component with `tool4d`
-* [`miyako/4D/.github/actions/build-component@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-codesign-product/action.yml) - sign component
-* [`miyako/4D/.github/actions/deployment-codesign-product@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-create-zip/action.yml) - create .zip from .dmg
+* [`miyako/4D/.github/actions/deployment-codesign-product@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-codesign-product/action.yml) - codesign and notarise component
+* [`miyako/4D/.github/actions/deployment-create-zip@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-create-zip/action.yml) - create .zip from .dmg
 * [`miyako/4D/.github/actions/deployment-release-assets@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-release-assets/action.yml) - upload .zip and .dmg
 
 In addition, the following GitHub workflow actions are used internally.
