@@ -36,7 +36,7 @@ In addition to arbitrary meta properties, you should provide the following build
 
 **Note**: Free GitHub hosted macOS runners are running on Intel. If you have a subscription, you can select [ARM hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners).
 
-# Reusable Worlflow Actions
+# Reusable Workflow Actions
 
 If your repository is not allowed to execute [external workflows](https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows), clone these.
 
