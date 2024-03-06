@@ -16,7 +16,7 @@ jobs:
         dmg_path="${GITHUB_TEMP}/${name}.dmg"
         zip_path="${GITHUB_TEMP}/${name}.zip"
         curl "https://github.com/miyako/4d-template-component-cicd/releases/download/patch-0.0.2/example.dmg" -o "${dmg_path}" -sL
-        hdiutil attach -nobrowse -noverify -mountpoint "${mountpoint}" "${dmg_path}"
+        hdiutil attach -nobrowse -noverify "${dmg_path}" -mountpoint "${mountpoint}"
         cp -a "${mountpoint}" "${folder_path}"
         ditto -c -k "${folder_path}" "${zip_path}"
         diskutil unmount "${mountpoint}"
