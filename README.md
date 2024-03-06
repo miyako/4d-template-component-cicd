@@ -43,7 +43,8 @@ If your repository is not allowed to execute [external workflows](https://docs.g
 * [`miyako/4D/.github/actions/package-set-version@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/package-set-version/action.yml) - update 
 `package.json`
 * [`miyako/4D/.github/actions/tool4d-get-version@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/tool4d-get-version/action.yml) - parse `package.json`
-* [`actions/upload-release-asset`](https://github.com/actions/upload-release-asset) - upload .dmg
+* [`miyako/4D/.github/actions/deployment-create-zip@v1`](https://github.com/miyako/4D/blob/v1/.github/actions/deployment-create-zip/action.yml) - create .zip from .dmg
+* [`actions/upload-release-asset`](https://github.com/actions/upload-release-asset) - upload .zip and .dmg
 
 # References
 
