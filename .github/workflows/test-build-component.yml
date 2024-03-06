@@ -16,6 +16,20 @@ jobs:
         id: setup
         run: |
           echo "project_path=${GITHUB_WORKSPACE}/example/Project/example.4DProject" >> $GITHUB_OUTPUT
+
+      - name: get tool version
+        id: tool
+        uses: miyako/4D/.github/actions/tool4d-get-version@v1
+        
+      - name: get tool4d
+        id: get
+        uses: miyako/4D/.github/actions/get-tool@v1
+        with:
+          platform: ${{ steps.tool.outputs.platform }}
+          branch: ${{ steps.tool.outputs.branch }}
+          version: ${{ steps.tool.outputs.version }}
+          build: ${{ steps.tool.outputs.build }}
+          arch: ${{ steps.tool.outputs.arch }}
         
       - name: build
         id: build
