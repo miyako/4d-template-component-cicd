@@ -16,11 +16,11 @@ You can manually dispatch the default workflow in either `patch` `minor` `major`
 
 The workflow does the following:
 
-* The project is compiled on a GitHub hosted runner (`macos-latest`) using `tool4d`.
-* The project is built as a component for ARM/Apple Silicon and AMD/Intel processors.
-* The component is signed with your **Apple Developer ID Application** certificate.
-* The component is submitted to Apple for notarisation.
-* The component is published under Releases.
+1. The project is compiled on a GitHub hosted runner (`macos-latest`) using `tool4d`.
+1. The project is built as a component for ARM/Apple Silicon and AMD/Intel processors.
+1. The component is signed with your **Apple Developer ID Application** certificate.
+1. The component is submitted to Apple for notarisation.
+1. The component is published under Releases.
 
 # Prerequisites
 
