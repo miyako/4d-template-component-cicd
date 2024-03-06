@@ -29,8 +29,7 @@ jobs:
       - name: configure
         id: configure
         run: |
-          if [ ${mode} -eq '' ]
-          then
+          if [ ${mode} = '' ]; then
           echo "mode=patch" >> $GITHUB_OUTPUT          
           else
           echo "mode=${mode}" >> $GITHUB_OUTPUT
