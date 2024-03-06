@@ -1,4 +1,4 @@
-name: Test reusable workflow action "Get Tool Version" 
+name: Test - Get Tool Version
 
 on: 
   workflow_dispatch:
@@ -6,6 +6,7 @@ on:
 jobs:
 
   test:
+    runs-on: [ubuntu-latest]
     steps:
     
       - name: get values
