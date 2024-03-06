@@ -1,5 +1,21 @@
 A template repository for 4D component developement
 
+# About
+
+This repository is configured to enable CI/CD of [4D components](https://developer.4d.com/docs/Concepts/components) using a chain of [GitHub Actions](https://docs.github.com/en/actions).
+
+You may clone it to get started with your own 4D component development on GitHub.
+
+## Workflow
+
+Whenever you push changes to your `main` branch, the following things happen:
+
+* The project is compiled on a GitHub hosted runner (`macos-latest`) using the latest tool4d.
+* The project is built as a component for ARM/Apple Silicon and AMD/Intel processors.
+* The component is sign with an Apple Developer ID Application certificate.
+* The component is notarised.
+* The component is published under Releases.
+
 # References
 
 [Installing an Apple certificate on macOS runners for Xcode development](https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development)
