@@ -6,13 +6,15 @@ This repository is configured to enable CI/CD of [4D components](https://develop
 
 You may clone it to get started with your own 4D component development on GitHub.
 
-* Development Workflow
+### Development
 
 Whenever you push changes to your `main` branch, the default workflow is triggered in `patch` mode.
 
-* Deployment Workflow
+### Deployment
 
 You can manually dispatch the default workflow in either `patch` `minor` `major` mode.
+
+## Workflow
 
 The workflow does the following:
 
