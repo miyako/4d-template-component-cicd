@@ -1,0 +1,25 @@
+name: Test - Build Component
+
+on: 
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    runs-on: [macos-latest]
+    steps:
+
+      - name: checkout 
+        uses: actions/checkout@v4
+        
+      - name: compile
+        id: compile
+        uses: miyako/4D/.github/actions/build-component@v1
+        with: 
+          project_path: example/Project/example.4DProject
+
+      - name: print result
+        run: |
+          echo "product_path: ${product_path}"
+        env: 
+          product_path: ${{ steps.compile.outputs.product_path }}
