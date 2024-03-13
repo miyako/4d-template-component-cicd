@@ -81,8 +81,8 @@ jobs:
           echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_OUTPUT
           echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_OUTPUT  
 
-      # cleanup in case of self-hosted runner
       - name: delete keychain
+        if: ${{ ! contains(runner.name, 'Github Actions') }}
         continue-on-error: true
         run: |
           security delete-keychain "${KEYCHAIN_PATH}"
@@ -91,6 +91,7 @@ jobs:
 
       - name: install credentials
         continue-on-error: true
+        if: ${{ contains(runner.name, 'Github Actions') }}
         run: |        
           echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
           security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
