@@ -8,7 +8,7 @@
   "tool": {
     "platform": "macos",
     "branch": "20.x",
-    "version": "20.2",
+    "version": "20.3",
     "build": "latest",
     "arch": "x86"
   }
