@@ -1,4 +1,4 @@
-A template repository for 4D component developement
+A template repository for 4D component developement.
 
 # About
 
