@@ -58,7 +58,7 @@ In addition to arbitrary meta properties, you should provide the following build
 |version|Text|[semantic versioning 2.0.0](https://semver.org)|
 |tool.platform|Text|always `macos`|
 |tool.branch|Text|default=`20.x`|
-|tool.version|Text|default=`20.3`|
+|tool.version|Text|default=`20.2`|
 |tool.build|Text|default=`latest`|
 |tool.arch|Text|always `x86`|
 
