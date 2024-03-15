@@ -72,48 +72,20 @@ jobs:
         with: 
           project_path: ${{ steps.configure.outputs.project_path }}
 
-      - name: setup  
-        id: setup
-        run: |
-          echo "project_path=${GITHUB_WORKSPACE}/example/Project/example.4DProject" >> $GITHUB_OUTPUT
-          KEYCHAIN_PATH="${RUNNER_TEMP}/temp.keychain-db"
-          CERTIFICATE_PATH="${RUNNER_TEMP}/Developer ID Application.p12"
-          echo "KEYCHAIN_PATH=${KEYCHAIN_PATH}" >> $GITHUB_OUTPUT
-          echo "CERTIFICATE_PATH=${CERTIFICATE_PATH}" >> $GITHUB_OUTPUT  
-
-      - name: delete keychain
-        if: ${{ ! contains(runner.name, 'Github Actions') }}
-        continue-on-error: true
-        run: |
-          security delete-keychain "${KEYCHAIN_PATH}"
-          security default-keychain -s ~/Library/Keychains/login.keychain-db
-        env:   
-          KEYCHAIN_PATH: ${{ steps.setup.outputs.KEYCHAIN_PATH }}
-
-      - name: install credentials
-        continue-on-error: true
-        if: ${{ contains(runner.name, 'Github Actions') }}
-        run: |        
-          echo -n "${APPLE_DEVELOPER_ID_CERTIFICATE}" | base64 --decode -o "${CERTIFICATE_PATH}"
-          security create-keychain -p "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
-          security default-keychain -s "${KEYCHAIN_PATH}"
-          security set-keychain-settings -t 21600 "${KEYCHAIN_PATH}"
-          security unlock-keychain -p "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
-          security import "${CERTIFICATE_PATH}" -P "${APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD}" -t cert -f pkcs12 -k "${KEYCHAIN_PATH}" -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "{$KEYCHAIN_PASSWORD}" "${KEYCHAIN_PATH}"
-        env:
-          CERTIFICATE_PATH: ${{ steps.setup.outputs.CERTIFICATE_PATH }}
+      - name: setup keychain 
+        id: keychain
+        uses: miyako/4D/.github/actions/deployment-setup-keychain@v1
+        with:
           APPLE_DEVELOPER_ID_CERTIFICATE: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE }}
           APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_CERTIFICATE_PASSWORD }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-          KEYCHAIN_PATH: ${{ steps.setup.outputs.KEYCHAIN_PATH }}
 
       - name: codesign
         id: codesign
         uses: miyako/4D/.github/actions/deployment-codesign-product@v1
         with: 
           sign: ${{ secrets.CODESIGN_APPLE_ID }} 
-          keychain: ${{ steps.setup.outputs.KEYCHAIN_PATH }}
+          keychain: ${{ steps.keychain.outputs.KEYCHAIN_PATH }}
           apple_id: ${{ secrets.NOTARYTOOL_APPLE_ID }}         
           team_id: ${{ secrets.NOTARYTOOL_TEAM_ID }}   
           password: ${{ secrets.NOTARYTOOL_PASSWORD }}
