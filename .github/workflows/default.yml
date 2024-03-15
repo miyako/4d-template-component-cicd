@@ -85,12 +85,12 @@ jobs:
         uses: miyako/4D/.github/actions/deployment-codesign-product@v1
         with: 
           sign: ${{ secrets.CODESIGN_APPLE_ID }} 
-          keychain: ${{ steps.keychain.outputs.KEYCHAIN_PATH }}
           apple_id: ${{ secrets.NOTARYTOOL_APPLE_ID }}         
           team_id: ${{ secrets.NOTARYTOOL_TEAM_ID }}   
           password: ${{ secrets.NOTARYTOOL_PASSWORD }}
           product_path: ${{ steps.build.outputs.product_path }}
-
+          keychain: ${{ steps.keychain.outputs.KEYCHAIN_PATH }}
+          
       - name: zip
         id: zip
         uses: miyako/4D/.github/actions/deployment-create-zip@v1
