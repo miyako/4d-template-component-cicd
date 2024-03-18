@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE base SYSTEM "http://www.4d.com/dtd/2007/base.dtd" >
-<base name="example" uuid="D79DD12842C84FFCA991CAE87DAB0F5C" collation_locale="ja">
+<base name="example" uuid="D79DD12842C84FFCA991CAE87DAB0F5C" collation_locale="en">
 	<schema name="DEFAULT_SCHEMA"/>
 	<base_extra>
-		<journal_file journal_file_enabled="true"/>
+		<journal_file journal_file_enabled="false"/>
 	</base_extra>
 </base>
