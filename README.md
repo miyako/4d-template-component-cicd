@@ -8,6 +8,8 @@ You may clone it to get started with your own 4D component development on GitHub
 
 **Note**: If you rename the project, you should modify `env.project_path` in [`default.yml`](https://github.com/miyako/4d-template-component-cicd/blob/main/.github/workflows/default.yml).
 
+The `/PROJECT/` folder must be inside a folder. It can't be placed at the root of the repository.
+
 ```yml
 env: 
   project_path: example/Project/example.4DProject
