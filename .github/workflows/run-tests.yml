@@ -12,7 +12,7 @@ on:
   workflow_call:      
  
 env:
-  project_path: BuildApp/Project/BuildApp.4DProject
+  project_path: example/Project/example.4DProject
   startup_method: test
   skip_onstartup: true
   create_data: false
