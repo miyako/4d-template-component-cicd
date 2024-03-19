@@ -1,0 +1,68 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+      - '*/Project/Sources/**/*.4dm'
+      - '*/Project/Sources/*/*.4DForm'
+      - '*/Project/Sources/*.4DCatalog'
+  workflow_dispatch:
+  workflow_call:      
+ 
+env:
+  project_path: BuildApp/Project/BuildApp.4DProject
+  startup_method: test
+  skip_onstartup: true
+  create_data: false
+  dataless: true
+  data: ''
+  
+jobs:
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        TOOL4D_PLATFORM: ["windows-latest", "macos-latest"]
+        TOOL4D_BRANCH: [20.x]
+        TOOL4D_VERSION: [20.2]
+        TOOL4D_BUILD: [latest]
+    runs-on: ${{ matrix.TOOL4D_PLATFORM }}
+    
+    steps:
+
+      - name: checkout 
+        uses: actions/checkout@v4    
+
+      - name: get tool4d
+        id: get
+        uses: miyako/4D/.github/actions/tool4d-download@v1
+        with:
+          platform: ${{ matrix.TOOL4D_PLATFORM }}
+          branch: ${{ matrix.TOOL4D_BRANCH }}
+          version: ${{ matrix.TOOL4D_VERSION }}
+          build: ${{ matrix.TOOL4D_BUILD }}
+
+      - name: run tests
+        id: tests
+        uses: miyako/4D/.github/actions/tool4d-execute@v1
+        with:          
+          tool4d_executable_path: ${{ steps.get.outputs.tool4d_executable_path }}
+          project_path: ${{ env.project_path }}  
+          startup_method: ${{ env.startup_method }}
+          skip_onstartup: ${{ env.skip_onstartup }}  
+          create_data: ${{ env.create_data }}  
+          dataless: ${{ env.dataless }}  
+          data: ${{ env.data }}  
+
+      - name: print results
+        run: |  
+          echo "stderr: ${stderr}"
+          if [[ "${stderr}" == *failed ]]; then
+          echo "failed"; exit 1
+          fi
+        env:
+          stderr: ${{ steps.tests.outputs.stderr }}
+        shell: bash  
