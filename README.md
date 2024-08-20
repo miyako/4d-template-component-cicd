@@ -64,9 +64,12 @@ In addition to arbitrary meta properties, you should provide the following build
 |tool.branch|Text|default=`20.x`|
 |tool.version|Text|default=`20.2`|
 |tool.build|Text|default=`latest`|
-|tool.arch|Text|always `x86`|
+|tool.arch|Text|`x86` or `arm`|
 
-**Note**: Free GitHub hosted macOS runners are running on Intel. If you have a subscription, you can select [ARM hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners).
+**Note**: ~~Free GitHub hosted macOS runners are running on Intel. If you have a subscription, you can select [ARM hosted runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-larger-runners/about-larger-runners)~~. ARM macOS runners are now [available](https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners). 
+
+* For Feature Releases, the space should be URL encoded, e.g. `20%20Rx` `20%20R6`.
+* The `latest` keyword can't be used while a Feature Release is in beta.
 
 Your Apple Developer credentials should be stored in [GitHub Actions secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
 
