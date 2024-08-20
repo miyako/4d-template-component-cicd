@@ -8,7 +8,7 @@ You may clone it to get started with your own 4D component development on GitHub
 
 **Note**: If you rename the project, you should modify `env.project_path` in your [`publish.yml`](https://github.com/miyako/4d-template-component-cicd/blob/main/.github/workflows/publish.yml).
 
-see also [`test-build-component.yml`](https://github.com/miyako/4d-template-component-cicd/blob/main/.github/workflows/test-build-component.yml#L18)
+See also [`test-build-component.yml`](https://github.com/miyako/4d-template-component-cicd/blob/main/.github/workflows/test-build-component.yml#L18).
 
 The build destination path is `${PWD}`. See [`miyako/4D/.github/actions/build-component`](https://github.com/miyako/4D/blob/v1/.github/actions/build-component/action.yml#L36) 
 
